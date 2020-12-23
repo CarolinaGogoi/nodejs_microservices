@@ -1,8 +1,8 @@
-import React, { useEffect} from 'react';
+import React, { useEffect, useState} from 'react';
 
 //redux
 import { useSelector, useDispatch } from 'react-redux'
-import { ApplicationState, OnGetBlockDetails  } from '../redux'
+import { ApplicationState, OnGetBlockDetails , OnReload } from '../redux'
 import LoadingSpinner from '../components/LoadingSpinner';
 
 import { useParams } from 'react-router-dom'
@@ -18,20 +18,27 @@ const ViewDetailsScreen = () => {
 
     const dispatch = useDispatch()
    
-    const { isLoading, blockDetails }  = useSelector((state: ApplicationState) => state.coinsReducer);
+    const { isLodingDetails, blockDetails }  = useSelector((state: ApplicationState) => state.coinsReducer);
 
+    const { tx } = blockDetails;
+ 
     useEffect(() => {
         dispatch(OnGetBlockDetails(hash, false));
+        return () => {
+            dispatch(OnReload());
+        }
     }, []);
 
+  
     // Load More Transactions
     const onTapViewMore = () => {
         dispatch(OnGetBlockDetails(hash, true));
     }
  
+ 
     const renderDetals = () => {
 
-        if(isLoading){
+        if(isLodingDetails){
             return <LoadingSpinner />
         }else{
 
@@ -64,7 +71,7 @@ const ViewDetailsScreen = () => {
                             </div>
                           </div>
                      </div> 
-                         <TransactionsTable transactions={blockDetails.tx} txnCount={blockDetails.txnCount} onTapViewMore={onTapViewMore} /> 
+                         <TransactionsTable transactions={tx} onTapViewMore={onTapViewMore} /> 
                      </div>
                 )
 

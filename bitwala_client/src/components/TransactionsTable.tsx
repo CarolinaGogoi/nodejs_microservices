@@ -4,11 +4,10 @@ import { FormatDate } from '../utils/DateFormater';
  
 interface TransactionsProps{
     transactions: [Transaction],
-    txnCount: number,
     onTapViewMore: Function
 }
 
- const TransactionsTable: React.FC<TransactionsProps> = ({ transactions, txnCount, onTapViewMore }) => {
+ const TransactionsTable: React.FC<TransactionsProps> = ({ transactions, onTapViewMore }) => {
 
     const [items, setItems] = useState({});
 
@@ -24,14 +23,13 @@ interface TransactionsProps{
         }
         return transactionsPerPage
     }
-
-
+ 
     useEffect(() => {
         if(transactions!== undefined){
             const transactionsPerPage = makePaination();
             setItems(transactionsPerPage)
         }
-    },[])
+    },[transactions])
 
     const itemsForPage = () => {
         return items as [[Transaction]];
@@ -100,7 +98,7 @@ interface TransactionsProps{
             if(currentItems.length > pageIndex){
                 return currentItems[pageIndex].map((item) => {
                     return (
-                        <tr>
+                        <tr key={item.hash}>
                             <td>{item.hash}</td>
                             <td>{item.block_index}</td>
                             <td>{item.block_height}</td>
@@ -137,7 +135,7 @@ interface TransactionsProps{
                     </tbody>
                     </table>
                 </div>
-                { txnCount > 10 ?  renderViewMoreTransaction() : renderPagination()}
+                { transactions.length > 10 ? renderPagination() : renderViewMoreTransaction() }
             </div>
         );
 

@@ -5,7 +5,8 @@
  type AppInitialState = {
     blocks: [Block];
     blockDetails: BlockDetails,
-    isLoading: boolean | undefined;
+    isLoading: boolean;
+    isLodingDetails: boolean,
     appError: any;
  }
  
@@ -13,6 +14,7 @@
         blocks: {} as [Block],
         blockDetails: {} as BlockDetails,
         isLoading: true,
+        isLodingDetails: true,
         appError: undefined
   };
   
@@ -32,7 +34,7 @@
         return {
           ...state,
           blockDetails: action.payload,
-          isLoading: false
+          isLodingDetails: false
         };
       
       case 'ON_ERROR':
@@ -45,6 +47,12 @@
         return {
           ...state,
           isLoding: action.payload
+        }
+      case 'ON_RELOAD':
+        return {
+          ...state,
+          isLodingDetails: true,
+          blockDetails: {} as BlockDetails
         }
       default:
         return state;

@@ -15,7 +15,7 @@ const LoadingSpinner = () => {
                         </div>
                     </div>
                 </div>
-
+                <p>Loading...</p>
             </div>)
     
 }

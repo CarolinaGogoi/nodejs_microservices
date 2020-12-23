@@ -8,20 +8,9 @@
     "rootDir": "./src",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    // "removeComments": true,
-    // "noImplicitAny": false,
-    // "strictNullChecks": true,
-    // "strictFunctionTypes": true,
-    // "noImplicitThis": true,
-    // "noUnusedLocals": true,
-    // "noUnusedParameters": false,
-    // "noImplicitReturns": true,
-    // "noFallthroughCasesInSwitch": true,
-    // "allowSyntheticDefaultImports": false,
-    
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules","./tests/"],
   "include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }

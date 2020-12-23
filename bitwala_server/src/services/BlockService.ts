@@ -1,4 +1,5 @@
 import{ Request, Response, NextFunction } from 'express';
+import { CACHE_AGE } from '../config';
 import { BlockDetails } from '../interfaces_dto';
 import { Api, NotFoundError } from '../utils';
 
@@ -9,9 +10,10 @@ export const GetBlocks = async (req: Request, res: Response, next: NextFunction)
     try {
          const response = await Api.get('blocks?format=json')
         if(response){
-            client.setex('latest_blocks',1800, JSON.stringify(response.data));
-            res.status(200).json(response.data)
+            client.setex('latest_blocks',CACHE_AGE, JSON.stringify(response.data));
+            return res.status(200).json(response.data)
         }
+        return next(new NotFoundError('Blocks data Not found'))
     } catch (ex) {
         return next(new NotFoundError('Blocks data Not found'))
     }
@@ -33,14 +35,16 @@ export const GetBlockByHash = async(req: Request, res: Response, next: NextFunct
 
                 const firstPageTxn = tx.slice(0,10);
                 
-                client.setex(`${blockHash}`, 600, JSON.stringify({ block_index, prev_block, size, txnCount: tx.length || 0, tx: firstPageTxn}));
-                client.setex(`${blockHash}-complete`, 600, JSON.stringify(blockDetails));
+                client.setex(`${blockHash}`, CACHE_AGE, JSON.stringify({ block_index, prev_block, size, txnCount: tx.length || 0, tx: firstPageTxn}));
+                client.setex(`${blockHash}-complete`, CACHE_AGE, JSON.stringify(blockDetails));
 
-               res.status(200).json({block_index, prev_block, size, txCount: tx.length, tx: firstPageTxn})
+              return res.status(200).json({block_index, prev_block, size, txCount: tx.length, tx: firstPageTxn})
            }
        } catch (ex) {
             return next(new NotFoundError('Blocks Details Not found'))
         }
+    }else{
+        return next(new NotFoundError('required parameter not found!'))
     } 
 
 }
@@ -61,8 +65,8 @@ export const GetMoreTransactions = async(req: Request, res: Response, next: Next
                 try {
                     const response = await Api.get<BlockDetails>(`rawblock/${blockHash}`)
                     if(response.data){
-                        client.setex(`${blockHash}-complete`, 600, JSON.stringify(response.data));
-                        res.status(200).json(response.data)
+                        client.setex(`${blockHash}-complete`, CACHE_AGE, JSON.stringify(response.data));
+                       return res.status(200).json(response.data)
                     }
                 } catch (ex) {
                     return next(new NotFoundError('Blocks Details Not found'))
@@ -71,6 +75,9 @@ export const GetMoreTransactions = async(req: Request, res: Response, next: Next
             }
          })
  
+    }else{
+        return next(new NotFoundError('required parameter not found!'))
     } 
+
 
 }

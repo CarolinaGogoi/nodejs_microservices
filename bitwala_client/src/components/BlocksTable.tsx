@@ -83,7 +83,7 @@ interface BlockProps{
         if(currentItems.length > pageIndex){
             return currentItems[pageIndex].map((block) => {
                 return (
-                    <tr>
+                    <tr key={block.hash} >
                         <td><Link to={`/details/${block.hash}`} >{block.hash}</Link></td>
                         <td>{FormatDate(block.time)}</td>
                         <td>{block.height}</td>

@@ -11,8 +11,8 @@ export default  (app: Application) => {
     //Get allBlocks
     app.get('/blocks', CacheBlocks, GetBlocks)
 
-    app.use('*',(req: Request, res: Response, next: NextFunction) => {
-        res.send(`
+    app.use((req: Request, res: Response, next: NextFunction) => {
+        res.status(200).send(`
             <!DOCTYPE html>
             <html>
             <head>

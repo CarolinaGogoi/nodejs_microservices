@@ -23,12 +23,12 @@ export interface OnLoadingAction{
     payload: boolean
 }
 
-export interface OnDismissAction{
-    readonly type: 'ON_DISMISS',
+export interface OnReload{
+    readonly type: 'ON_RELOAD',
 }
 
 export type CoinsAction = GetBlocksAction | GetBlockDetailsAction | AppErrorAction 
-| OnLoadingAction | OnDismissAction;
+| OnLoadingAction | OnReload;
 
 
 export const OnGetBlocks = () => {
@@ -91,3 +91,11 @@ export const OnGetBlockDetails = (hash: string, isViewMore: boolean) => {
         }
     }
 }
+  
+export const OnReload = () => {
+ 
+    return async ( dispatch: Dispatch<CoinsAction>) => {
+        dispatch({ type: 'ON_RELOAD' })
+    }
+}
+ 

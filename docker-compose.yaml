@@ -14,5 +14,12 @@ services:
           - "4000:4000"
       volumes:
           - ./server:/usr/src/app
+  client:
+      container_name: bitwala_client
+      build:
+          context: ./bitwala_client
+          dockerfile: Dockerfile
+      ports:
+          - "3000:80"
    
 
