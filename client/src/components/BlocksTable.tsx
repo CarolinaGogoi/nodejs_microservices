@@ -1,6 +1,6 @@
 import React, { useEffect ,useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Block } from '../models/'
+import { Block } from '../models'
 import { FormatDate } from '../utils/DateFormater';
 
 interface BlockProps{
@@ -84,7 +84,7 @@ interface BlockProps{
             return currentItems[pageIndex].map((block) => {
                 return (
                     <tr key={block.hash} >
-                        <td><Link to={`/details/${block.hash}`} >{block.hash}</Link></td>
+                        <td className="blockLink"><Link to={`/details/${block.hash}`} >{block.hash}</Link></td>
                         <td>{FormatDate(block.time)}</td>
                         <td>{block.height}</td>
                    </tr>
@@ -96,8 +96,8 @@ interface BlockProps{
  
     return (
  
-        <div className="card card-width">
-        <div className="col s12">
+        <div className="card">
+        <div className="col">
             <div className="card-content">
                 <span className="card-title">Latest Blocks</span>
 

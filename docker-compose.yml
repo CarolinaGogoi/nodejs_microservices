@@ -1,0 +1,31 @@
+version: "3"
+services: 
+    redis:
+        image: 'redis:latest'
+    api:
+        container_name: server
+        build:
+            context: ./server
+        depends_on: 
+            - redis
+        environment:
+            - REDIS_HOST=redis
+            - REDIS_PORT=6379
+        ports:
+            - "4000:4000"
+    client:
+        container_name: client
+        build:
+            context: ./client
+        ports:
+            - "3000:80"
+    reverse-proxy:
+        container_name: reverse_proxy_demo
+        build:
+            context: ./nginx
+        depends_on:
+            - client
+            - api
+        ports:
+            - "80:80"
+    

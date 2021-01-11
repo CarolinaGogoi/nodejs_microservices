@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {Transaction } from '../models/'
+import {Transaction } from '../models'
 import { FormatDate } from '../utils/DateFormater';
  
 interface TransactionsProps{
@@ -99,7 +99,7 @@ interface TransactionsProps{
                 return currentItems[pageIndex].map((item) => {
                     return (
                         <tr key={item.hash}>
-                            <td>{item.hash}</td>
+                            <td className="blockLink">{item.hash}</td>
                             <td>{item.block_index}</td>
                             <td>{item.block_height}</td>
                             <td>{item.weight}</td>

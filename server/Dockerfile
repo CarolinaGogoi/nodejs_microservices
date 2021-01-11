@@ -14,3 +14,4 @@ COPY .env ./dist
 EXPOSE 4000
 
 CMD ["npm", "start"]
+

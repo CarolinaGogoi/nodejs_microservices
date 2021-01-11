@@ -62,7 +62,7 @@ const ViewDetailsScreen = () => {
                                         </tr>
                                         <tr>
                                             <td>Previous Hash</td>
-                                            <td>{blockDetails.prev_block}</td>
+                                            <td className="blockLink">{blockDetails.prev_block}</td>
                                         </tr>
                                          
                                     </tbody>
