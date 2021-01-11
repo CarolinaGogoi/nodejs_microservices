@@ -1,4 +1,4 @@
-# Jayanta-Gogoi-Coding-Challenge
+# Practical demonstration
 
 Let's go through the readme file to understand the project work and source code execution flow.
 
